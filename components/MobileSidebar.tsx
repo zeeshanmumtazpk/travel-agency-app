@@ -1,15 +1,34 @@
+import { SidebarComponent } from "@syncfusion/ej2-react-navigations";
+import { Link } from "react-router";
+import { useRef } from "react";
+import NavItems from "./NavItems";
+
 function MobileSidebar() {
+const sidebar = useRef<SidebarComponent>(null);
     return (  
-        <div className="w-64 h-screen bg-gray-800 text-white p-4">
-            <h2 className="text-2xl font-bold mb-4">Mobile Sidebar</h2>
-            <nav>
-                <ul>
-                    <li className="mb-2"><a href="#" className="block px-3 py-2 rounded hover:bg-gray-700">Home</a></li>
-                    <li className="mb-2"><a href="#" className="block px-3 py-2 rounded hover:bg-gray-700">Profile</a></li>
-                    <li className="mb-2"><a href="#" className="block px-3 py-2 rounded hover:bg-gray-700">Settings</a></li>
-                    <li><a href="#" className="block px-3 py-2 rounded hover:bg-gray-700">Logout</a></li>
-                </ul>
-            </nav>
+        <div className="mobile-sidebar wrapper lg:hidden">
+           <header className="mobile-header">
+            <Link to="/" className="link-logo">
+            <img src="/assets/icons/logo.svg" alt="logo" className="size-[30px]" />
+            <h1>Tourvisto</h1>
+            </Link>
+            <button className="btn-ghost" onClick={()=>{
+                sidebar.current?.toggle();
+            }}>
+                <img src="/assets/icons/menu.svg" alt="menu" className="size-6" />
+            </button>
+           </header>
+           <SidebarComponent 
+           ref={sidebar}
+            width={270} 
+            enableGestures={true} 
+            created={sidebar.current?.hide()}
+            closeOnDocumentClick={true}
+            showBackdrop={true}
+            type="over"
+           >
+            <NavItems />
+           </SidebarComponent>
         </div>
     );
 }
